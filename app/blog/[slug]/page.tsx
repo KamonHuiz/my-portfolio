@@ -1,0 +1,183 @@
+import Link from "next/link";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { LuArrowLeft, LuArrowRight, LuChevronLeft } from "react-icons/lu";
+import { getAdjacentPosts, getAllPosts, getPost } from "@/lib/blog";
+import { extractToc, markdownToHtml } from "@/lib/markdown";
+import { getViews } from "@/lib/views";
+import { site } from "@/data/site";
+import ViewCounter from "@/components/ViewCounter";
+import Comments from "@/components/Comments";
+
+type Props = { params: Promise<{ slug: string }> };
+
+export const revalidate = 60;
+
+export function generateStaticParams() {
+  return getAllPosts().map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPost(slug);
+  if (!post) return { title: "Post not found" };
+
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.description,
+      url: `${site.url}/blog/${post.slug}`,
+      publishedTime: post.date,
+      images: post.cover ? [post.cover] : undefined,
+    },
+  };
+}
+
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
+  const post = getPost(slug);
+  if (!post) notFound();
+
+  const [html, views] = await Promise.all([
+    markdownToHtml(post.content),
+    getViews(slug),
+  ]);
+  const toc = extractToc(post.content);
+  const { newer, older } = getAdjacentPosts(slug);
+
+  return (
+    <div className="mx-auto max-w-4xl px-6 pt-10 pb-4">
+      <Link
+        href="/blog"
+        className="inline-flex items-center gap-1 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)]"
+      >
+        <LuChevronLeft className="h-4 w-4" />
+        All posts
+      </Link>
+
+      <article className="rise mt-8">
+        <header className="border-b border-[var(--line)] pb-8">
+          <h1 className="text-3xl leading-tight font-semibold tracking-tight sm:text-[2.6rem] sm:leading-[1.15]">
+            {post.title}
+          </h1>
+
+          {post.description && (
+            <p className="mt-4 text-lg leading-relaxed text-[var(--muted)]">
+              {post.description}
+            </p>
+          )}
+
+          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[var(--muted)]">
+            <time dateTime={post.date}>
+              {new Date(post.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            <span aria-hidden>·</span>
+            <span>{post.minutes} min read</span>
+            <span aria-hidden>·</span>
+            <ViewCounter slug={slug} initial={views} track />
+          </div>
+
+          {post.tags.length > 0 && (
+            <ul className="mt-4 flex flex-wrap gap-1.5">
+              {post.tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-full border border-[var(--line)] px-2.5 py-0.5 text-[0.72rem] text-[var(--muted)]"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          )}
+        </header>
+
+        {post.cover && (
+          <Image
+            src={post.cover}
+            alt={post.title}
+            width={1600}
+            height={900}
+            priority
+            sizes="(max-width: 896px) 100vw, 896px"
+            className="mt-8 h-auto w-full rounded-xl border border-[var(--line)] object-cover"
+          />
+        )}
+
+        <div className="mt-10 lg:grid lg:grid-cols-[1fr_200px] lg:gap-10">
+          <div
+            className="markdown min-w-0"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+
+          {toc.length > 1 && (
+            <aside className="order-last hidden lg:block">
+              <nav className="sticky top-24">
+                <p className="mb-3 text-xs font-semibold tracking-wider text-[var(--muted)] uppercase">
+                  On this page
+                </p>
+                <ul className="space-y-2 border-l border-[var(--line)] text-sm">
+                  {toc.map((item) => (
+                    <li key={item.id} style={{ paddingLeft: item.level === 3 ? "1.5rem" : "0.9rem" }}>
+                      <a
+                        href={`#${item.id}`}
+                        className="block text-[var(--muted)] transition-colors hover:text-[var(--link)]"
+                      >
+                        {item.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </aside>
+          )}
+        </div>
+      </article>
+
+      {/* Bài trước / bài sau */}
+      {(newer || older) && (
+        <nav className="mt-16 grid gap-4 border-t border-[var(--line)] pt-8 sm:grid-cols-2">
+          {newer ? (
+            <Link
+              href={`/blog/${newer.slug}`}
+              className="group rounded-lg border border-[var(--line)] p-4 transition-colors hover:bg-[var(--surface)]"
+            >
+              <span className="flex items-center gap-1 text-xs text-[var(--muted)]">
+                <LuArrowLeft className="h-3 w-3" /> Newer
+              </span>
+              <span className="mt-1 block font-semibold transition-colors group-hover:text-[var(--link)]">
+                {newer.title}
+              </span>
+            </Link>
+          ) : (
+            <span />
+          )}
+
+          {older && (
+            <Link
+              href={`/blog/${older.slug}`}
+              className="group rounded-lg border border-[var(--line)] p-4 text-right transition-colors hover:bg-[var(--surface)] sm:col-start-2"
+            >
+              <span className="flex items-center justify-end gap-1 text-xs text-[var(--muted)]">
+                Older <LuArrowRight className="h-3 w-3" />
+              </span>
+              <span className="mt-1 block font-semibold transition-colors group-hover:text-[var(--link)]">
+                {older.title}
+              </span>
+            </Link>
+          )}
+        </nav>
+      )}
+
+      <Comments />
+    </div>
+  );
+}

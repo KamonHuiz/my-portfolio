@@ -1,0 +1,287 @@
+@import "tailwindcss";
+
+/* Bật dark mode theo class .dark (next-themes gắn class này vào thẻ <html>).
+   Thiếu dòng này thì Tailwind v4 sẽ chạy theo cài đặt của hệ điều hành,
+   nút Dark/Light trên thanh nav sẽ không ăn vào các class dark:... */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================================
+   BẢNG MÀU & FONT
+   Muốn đổi màu toàn site thì sửa ở đây, không cần đụng vào chỗ nào khác.
+   Tông màu lấy theo huyenchip.com (nền kem, chữ gần đen, link xanh).
+   ========================================================================== */
+
+@theme {
+  --font-serif: var(--font-lora), Lora, Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-mono-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-paper: #fdfdfd;
+  --color-ink: #111111;
+  --color-muted: #828282;
+  --color-line: #e8e8e8;
+  --color-link: #4d74eb;
+  --color-link-visited: #1337a6;
+
+  --color-paper-dark: #0d0d0f;
+  --color-ink-dark: #e9e9ea;
+  --color-muted-dark: #8f8f96;
+  --color-line-dark: #26262b;
+  --color-link-dark: #8aa2f5;
+}
+
+/* Biến dùng trong CSS thường (đổi theo light/dark) */
+:root {
+  --bg: #fdfdfd;
+  --fg: #111111;
+  --muted: #828282;
+  --line: #e8e8e8;
+  --link: #4d74eb;
+  --link-visited: #1337a6;
+  --surface: #f5f5f4;
+  --code-bg: #eeeef8;
+}
+
+.dark {
+  --bg: #0d0d0f;
+  --fg: #e9e9ea;
+  --muted: #8f8f96;
+  --line: #26262b;
+  --link: #8aa2f5;
+  --link-visited: #a9bbf8;
+  --surface: #161619;
+  --code-bg: #161619;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.6;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: var(--link);
+    color: #fff;
+  }
+
+  /* Vòng focus cho người dùng bàn phím */
+  :focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ==========================================================================
+   NỘI DUNG MARKDOWN (blog, news, list100)
+   ========================================================================== */
+
+.markdown {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.markdown > * + * { margin-top: 1.15em; }
+
+.markdown h2 {
+  font-size: 1.75rem;
+  margin-top: 2.2em;
+  margin-bottom: 0.6em;
+  scroll-margin-top: 6rem;
+}
+
+.markdown h3 {
+  font-size: 1.35rem;
+  margin-top: 1.8em;
+  margin-bottom: 0.5em;
+  scroll-margin-top: 6rem;
+}
+
+.markdown h4 {
+  font-size: 1.15rem;
+  margin-top: 1.5em;
+  scroll-margin-top: 6rem;
+}
+
+.markdown a {
+  color: var(--link);
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+.markdown a:hover { text-decoration: underline; }
+
+.markdown ul, .markdown ol { padding-left: 1.6em; }
+.markdown ul { list-style: disc; }
+.markdown ol { list-style: decimal; }
+.markdown li + li { margin-top: 0.35em; }
+.markdown li::marker { color: var(--muted); }
+
+.markdown blockquote {
+  border-left: 4px solid var(--line);
+  padding-left: 1rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.markdown img {
+  border-radius: 0.5rem;
+  margin-inline: auto;
+}
+
+.markdown hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin-block: 2.5em;
+}
+
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+}
+.markdown th, .markdown td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.markdown th { background: var(--surface); font-weight: 600; }
+
+/* code inline */
+.markdown :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+/* checklist trong List100 */
+.markdown input[type="checkbox"] {
+  margin-right: 0.55em;
+  accent-color: var(--link);
+  width: 0.95em;
+  height: 0.95em;
+  vertical-align: -0.08em;
+}
+.markdown li:has(> input[type="checkbox"]) { list-style: none; margin-left: -1.6em; }
+.markdown li:has(> input[type="checkbox"]:checked) { color: var(--muted); }
+.markdown li:has(> input[type="checkbox"]:checked) > * { text-decoration: line-through; }
+
+/* Neo (#) cạnh tiêu đề */
+.markdown .heading-anchor {
+  opacity: 0;
+  margin-left: 0.4rem;
+  color: var(--muted);
+  font-weight: 400;
+  text-decoration: none;
+}
+.markdown h2:hover .heading-anchor,
+.markdown h3:hover .heading-anchor,
+.markdown h4:hover .heading-anchor { opacity: 1; }
+
+/* ==========================================================================
+   KHỐI CODE (shiki, 2 theme sáng/tối)
+   ========================================================================== */
+
+.markdown pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 1rem 1.15rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  background: var(--code-bg) !important;
+}
+
+[data-rehype-pretty-code-figure] pre code { display: grid; }
+[data-rehype-pretty-code-figure] code[data-line-numbers] {
+  counter-reset: line;
+}
+[data-rehype-pretty-code-figure] code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.4rem;
+  margin-right: 1.2rem;
+  text-align: right;
+  color: var(--muted);
+}
+[data-rehype-pretty-code-title] {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 0.6rem 0.6rem 0 0;
+  background: var(--surface);
+}
+[data-rehype-pretty-code-title] + pre { border-radius: 0 0 0.6rem 0.6rem; }
+
+/* Shiki đổi màu theo theme */
+html.dark .shiki, html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+}
+
+/* ==========================================================================
+   HIỆU ỨNG
+   ========================================================================== */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.rise { animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Thanh cuộn */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* Markdown rút gọn dùng trong News / List100 */
+.markdown-inline a {
+  color: var(--link);
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+.markdown-inline a:hover { text-decoration: underline; }
+.markdown-inline code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.08em 0.32em;
+}
