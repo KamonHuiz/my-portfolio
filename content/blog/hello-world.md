@@ -3,68 +3,29 @@ title: "How did I got for myself the name 'Kamon'"
 description: "My story relates to this book - Totto-chan: The Little Girl at the Window by Tetsuko Kuroyanagi"
 date: "2026-08-19"
 tags: ["nontech", "story"]
-cover: "/images/blog/TottoChan.png"
+cover: "/images/blog/1/TottoChan.png"
 draft: false
 ---
 
-I have been meaning to build this site for about two years. Every time I sat down to
-start, I got distracted by a model that wouldn't converge, and the idea quietly slid
-to the bottom of the list.
+Thanks to [Dưa Leo's book review video](https://www.youtube.com/watch?v=6Ec6_D8oRwU), I found out this amazing book.
 
-So here it is, finally. A small corner of the internet that belongs to me.
+## Why does this book relate to my name?
 
-## Why bother
+Before telling you about how I come up with that name, it would be a pity if I did not tell you about this book.
 
-Most of what I learn gets lost. I figure something out at 2am, feel briefly clever,
-and then three months later I hit the exact same wall and have no memory of solving
-it before. Writing is the only fix I have found that actually works.
+Basically, this book is a Japanese book that tells about a girl named Totto-chan and her surroundings. The story in this book was the real experience of the author.
 
-The second reason is simpler: I like reading other people's notes. Half of what I
-know about computer vision came from someone's messy blog post rather than a paper.
-This is me paying that back.
+I won't spoil anything because I will only tell you how good it is. For every stage in your life when you read this book you will have different point of view. If you are parent right now after read this book you will understand more about your kids, from the way they think to the way they take actions. However, if you are a kid , you will together with the girl in the book explore world.
 
-## What goes here
+If you are Vietnamese you should watch the video I mentioned above to know more about this book.
 
-Roughly three things:
+Great, I think this is the time to reveal the truth.
+When I was reading that book, I come across a word "Kamon". But even when I read the explanation of that word in the book I still do not know what it is. I decided to search on google what Kamon is. The result is a Japanese badge for family clan. Then I try to use a translator to translate that word to Vietnamese.
 
-1. **Notes on what I'm learning** — mostly computer vision, occasionally whatever
-   rabbit hole I fell into that week.
-2. **Post-mortems on projects** — including the ones that didn't work, which are
-   usually more interesting.
-3. **Things I think are worth sharing** — papers, tools, ideas.
+Here is the result.
+![The word Tiếng Việt is Vietnamese](/images/blog/1/GoogleTranslate.png)
 
-> If I can't write it down clearly, I probably don't understand it yet.
+BAMMMMM! Now I know my name really has the meaning. Since then I started to use it as my nickname.
 
-## A quick technical note
+And yeah That is it of my story. Thanks for reading... By the way this is my first Blog I upload on this site.
 
-This site is a static Next.js app. Every post you see is just a Markdown file in a
-folder — no database, no CMS, no admin panel to log into. Writing a post looks like
-this:
-
-```bash
-# tạo file mới trong content/blog/
-touch content/blog/my-new-post.md
-```
-
-And the file itself starts with a small block of settings:
-
-```yaml
----
-title: "My new post"
-description: "One sentence about it."
-date: "2026-08-20"
-tags: ["computer-vision"]
-draft: false
----
-```
-
-That's the entire publishing pipeline. Write the file, push it to GitHub, and the
-site rebuilds itself.
-
-## What's next
-
-I have a backlog of half-written notes about object detection, a long complaint about
-data labelling, and a post about the club I helped found. They will show up here
-eventually.
-
-Thanks for reading. If you have thoughts, the comment box is right below.

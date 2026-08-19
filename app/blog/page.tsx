@@ -26,7 +26,7 @@ export default function BlogPage() {
       <Reveal>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Blog</h1>
         <p className="mt-3 max-w-xl text-[var(--muted)]">
-          Notes on AI, computer vision, and things I figured out the hard way.
+          Notes on everything I have experienced in my life.
         </p>
       </Reveal>
 

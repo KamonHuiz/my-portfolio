@@ -21,3 +21,4 @@
 - [ ] 8. Try skydiving at least once
 - [ ] 9. Have a six-pack at least once in my life
 - [ ] 10. Make a friend from another country
+- [ ] 11. Make a small garden for my beloved Kin Kin to raise all of her favorite animals
