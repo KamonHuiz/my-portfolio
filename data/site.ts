@@ -3,11 +3,44 @@
    Sửa file này để đổi tên, mô tả, link mạng xã hội, menu điều hướng.
    ========================================================================== */
 
+/**
+ * Địa chỉ website, dùng cho SEO / RSS / link chia sẻ.
+ *
+ * Thứ tự ưu tiên:
+ *   1. Biến NEXT_PUBLIC_SITE_URL bạn tự đặt (khi đã có tên miền riêng)
+ *   2. Địa chỉ Vercel tự cấp cho bản deploy hiện tại
+ *   3. localhost, dùng khi chạy ở máy
+ *
+ * Biến để trống, thiếu https://, hay lỡ dính dấu nháy đều được xử lý ở đây
+ * nên trang không bao giờ vỡ vì một địa chỉ viết sai.
+ */
+function resolveSiteUrl(): string {
+  const candidates = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    // Vercel tự đặt sẵn 2 biến này, không cần bạn khai báo gì:
+    process.env.VERCEL_PROJECT_PRODUCTION_URL, // tên miền chính, không đổi
+    process.env.VERCEL_URL, // địa chỉ riêng của lần deploy này
+  ];
+
+  for (const candidate of candidates) {
+    const cleaned = candidate?.trim().replace(/^["']|["']$/g, "").replace(/\/+$/, "");
+    if (!cleaned) continue;
+
+    const withProtocol = /^https?:\/\//.test(cleaned) ? cleaned : `https://${cleaned}`;
+    try {
+      return new URL(withProtocol).origin;
+    } catch {
+      // địa chỉ này hỏng, thử cái tiếp theo
+    }
+  }
+
+  return "http://localhost:3000";
+}
+
 export const site = {
   handle: "@kamontheguy",
   name: "Kamon Nguyen",
-  /** Dùng cho SEO + link chia sẻ. Sau khi deploy nhớ đổi thành domain thật. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://my-portfolio-kamon.vercel.app",
+  url: resolveSiteUrl(),
   description:
     "Personal site of Kamon Nguyen — AI, computer vision, and things I build along the way.",
   /** Repo GitHub chứa chính website này (Giscus dùng để lưu comment). */
