@@ -42,7 +42,7 @@ export const site = {
   name: "Kamon Nguyen",
   url: resolveSiteUrl(),
   description:
-    "Personal site of Kamon Nguyen — AI, computer vision, and things I build along the way.",
+    "Personal site of Kamon — things I build along the way.",
   /**
    * Repo GitHub dùng để lưu bình luận (Giscus).
    *

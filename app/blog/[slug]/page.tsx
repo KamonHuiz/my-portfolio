@@ -101,11 +101,14 @@ export default async function PostPage({ params }: Props) {
           <Image
             src={post.cover}
             alt={post.title}
-            width={1600}
-            height={900}
+            width={post.coverWidth}
+            height={post.coverHeight}
             priority
             sizes="(max-width: 768px) 100vw, 768px"
-            className="reading-width mt-8 h-auto w-full rounded-xl border border-[var(--line)] object-cover"
+            /* Ảnh giữ đúng tỉ lệ gốc, không bị cắt cũng không bị kéo méo.
+               Ảnh ngang to thì thu về vừa cột chữ, ảnh dọc thì khống chế
+               chiều cao cho khỏi dài lê thê, ảnh nhỏ thì để nguyên cỡ thật. */
+            className="mt-8 h-auto max-h-[34rem] w-auto max-w-full rounded-xl border border-[var(--line)] sm:max-w-[48rem]"
           />
         )}
 

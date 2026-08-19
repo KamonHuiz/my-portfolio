@@ -19,7 +19,7 @@ export default function List100Page() {
       <Reveal>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">List 100</h1>
         <p className="mt-3 max-w-xl text-[var(--muted)]">
-          Things I want to do before I die. Please let me know if you have any
+          100 things I want to do before I die. I am still working on this list. Please let me know if you have any
           recommendation — the comment box is right at the bottom.
         </p>
 

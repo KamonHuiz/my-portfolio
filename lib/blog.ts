@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { imageSize } from "image-size";
 import { readingTime } from "./markdown";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
@@ -14,6 +15,9 @@ export type PostMeta = {
   tags: string[];
   /** Ảnh bìa trong public/, để trống nếu không có */
   cover: string;
+  /** Kích thước thật của ảnh bìa, để hiển thị đúng tỉ lệ không bị cắt */
+  coverWidth: number;
+  coverHeight: number;
   /** true = ẩn khỏi danh sách (bài nháp) */
   draft: boolean;
   minutes: number;
@@ -33,10 +37,32 @@ function parseFile(fileName: string): Post {
     date: typeof data.date === "string" ? data.date : formatDate(data.date),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     cover: data.cover ?? "",
+    ...measureCover(data.cover),
     draft: data.draft === true,
     minutes: readingTime(content),
     content,
   };
+}
+
+/**
+ * Đo kích thước thật của ảnh bìa ngay lúc build.
+ *
+ * Nhờ vậy ảnh ở đầu bài viết hiện đúng tỉ lệ gốc, bạn tải ảnh vuông,
+ * ảnh dọc hay ảnh ngang đều được, không bị cắt xén hay kéo méo.
+ * Đọc không được thì quay về tỉ lệ 16:9 cho an toàn.
+ */
+function measureCover(cover?: string): { coverWidth: number; coverHeight: number } {
+  const fallback = { coverWidth: 1600, coverHeight: 900 };
+  if (!cover || cover.startsWith("http")) return fallback;
+
+  try {
+    const file = path.join(process.cwd(), "public", cover.replace(/^\//, ""));
+    const { width, height } = imageSize(fs.readFileSync(file));
+    if (!width || !height) return fallback;
+    return { coverWidth: width, coverHeight: height };
+  } catch {
+    return fallback;
+  }
 }
 
 /** gray-matter tự đổi ngày không đặt trong nháy thành Date, đưa về YYYY-MM-DD */

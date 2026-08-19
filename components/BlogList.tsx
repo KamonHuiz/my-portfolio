@@ -135,7 +135,7 @@ function CardView({
               <Meta post={post} stats={stats[post.slug]} className="mt-4" />
             </div>
 
-            <div className="relative h-24 w-24 shrink-0 overflow-hidden sm:h-[8.5rem] sm:w-[13rem]">
+            <div className="relative h-24 w-24 shrink-0 overflow-hidden bg-[var(--surface)] sm:h-[8.5rem] sm:w-[13rem]">
               <Cover post={post} />
             </div>
           </Link>
@@ -162,7 +162,7 @@ function CompactView({
         <li key={post.slug} className="rise" style={{ animationDelay: `${0.04 * i}s` }}>
           <Link href={`/blog/${post.slug}`} className="group flex gap-5 py-7">
             {post.cover && (
-              <div className="relative hidden h-24 w-36 shrink-0 overflow-hidden rounded border border-[var(--line)] sm:block">
+              <div className="relative hidden h-24 w-36 shrink-0 overflow-hidden rounded border border-[var(--line)] bg-[var(--surface)] sm:block">
                 <Image src={post.cover} alt={post.title} fill sizes="144px" className="object-cover" />
               </div>
             )}

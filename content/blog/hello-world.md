@@ -1,9 +1,9 @@
 ---
-title: "Hello, world"
-description: "Why I finally built a place of my own on the internet, and what I plan to put here."
+title: "How did I got for myself the name 'Kamon'"
+description: "My story relates to this book - Totto-chan: The Little Girl at the Window by Tetsuko Kuroyanagi"
 date: "2026-08-19"
-tags: ["meta", "writing"]
-cover: ""
+tags: ["nontech", "story"]
+cover: "/images/blog/TottoChan.png"
 draft: false
 ---
 
