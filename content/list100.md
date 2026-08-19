@@ -18,7 +18,7 @@
 - [ ] 5. See snow in real life
 - [ ] 6. Get all achievements in minecraft
 - [ ] 7. Have a job that I actually enjoy
-- [ ] 8. Try skydiving at least once
+- [ ] 8. Try scuba diving at least once
 - [ ] 9. Have a six-pack at least once in my life
 - [ ] 10. Make a friend from another country
 - [ ] 11. Make a small garden for my beloved Kin Kin to raise all of her favorite animals

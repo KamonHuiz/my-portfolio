@@ -39,7 +39,7 @@ function resolveSiteUrl(): string {
 
 export const site = {
   handle: "@kamontheguy",
-  name: "Kamon Nguyen",
+  name: "kamontheguy",
   url: resolveSiteUrl(),
   description:
     "Personal site of Kamon — things I build along the way.",

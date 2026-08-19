@@ -15,7 +15,7 @@ Before telling you about how I come up with that name, it would be a pity if I d
 
 Basically, this book is a Japanese book that tells about a girl named Totto-chan and her surroundings. The story in this book was the real experience of the author.
 
-I won't spoil anything because I will only tell you how good it is. For every stage in your life when you read this book you will have different point of view. If you are parent right now after read this book you will understand more about your kids, from the way they think to the way they take actions. However, if you are a kid , you will together with the girl in the book explore world.
+I won't spoil anything because I will only tell you how good it is. For every stage in your life when you read this book you will have different point of view. If you are parent right now after read this book you will understand more about your kids, from the way they think to the way they take actions. However, if you are a kid , you will together with the girl in the book explore the world.
 
 If you are Vietnamese you should watch the video I mentioned above to know more about this book.
 
