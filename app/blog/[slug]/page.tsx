@@ -5,14 +5,14 @@ import type { Metadata } from "next";
 import { LuArrowLeft, LuArrowRight, LuChevronLeft } from "react-icons/lu";
 import { getAdjacentPosts, getAllPosts, getPost } from "@/lib/blog";
 import { extractToc, markdownToHtml } from "@/lib/markdown";
-import { getViews } from "@/lib/views";
 import { site } from "@/data/site";
 import ViewCounter from "@/components/ViewCounter";
 import Comments from "@/components/Comments";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const revalidate = 60;
+// Không gọi mạng ở đây nên bài viết được sinh sẵn thành file tĩnh, mở là hiện ngay.
+// Số lượt xem do ViewCounter tự nạp và tự cộng thêm sau khi trang hiện ra.
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -43,10 +43,7 @@ export default async function PostPage({ params }: Props) {
   const post = getPost(slug);
   if (!post) notFound();
 
-  const [html, views] = await Promise.all([
-    markdownToHtml(post.content),
-    getViews(slug),
-  ]);
+  const html = await markdownToHtml(post.content);
   const toc = extractToc(post.content);
   const { newer, older } = getAdjacentPosts(slug);
 
@@ -83,7 +80,7 @@ export default async function PostPage({ params }: Props) {
             <span aria-hidden>·</span>
             <span>{post.minutes} min read</span>
             <span aria-hidden>·</span>
-            <ViewCounter slug={slug} initial={views} track />
+            <ViewCounter slug={slug} track />
           </div>
 
           {post.tags.length > 0 && (

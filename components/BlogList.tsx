@@ -13,10 +13,10 @@ export type BlogListItem = {
   cover: string;
   minutes: number;
   draft: boolean;
-  views: number;
-  /** Số bình luận lấy từ GitHub Discussions. Chưa có token thì luôn là 0. */
-  comments: number;
 };
+
+/** Số liệu nạp sau khi trang đã hiện, lấy từ /api/blog-stats */
+type PostStats = { views: number; comments: number };
 
 /** "cards" = kiểu medium.com (có ảnh) · "compact" = kiểu huyenchip (danh sách gọn) */
 type Mode = "cards" | "compact";
@@ -26,11 +26,28 @@ const DEFAULT_MODE: Mode = "cards";
 
 export default function BlogList({ posts }: { posts: BlogListItem[] }) {
   const [mode, setMode] = useState<Mode>(DEFAULT_MODE);
+  const [stats, setStats] = useState<Record<string, PostStats>>({});
 
   // Nhớ lựa chọn của người đọc cho những lần sau
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved === "cards" || saved === "compact") setMode(saved);
+  }, []);
+
+  // Nạp lượt xem + lượt bình luận sau khi trang đã hiện ra
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/api/blog-stats")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && !cancelled) setStats(data);
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const choose = (next: Mode) => {
@@ -69,7 +86,11 @@ export default function BlogList({ posts }: { posts: BlogListItem[] }) {
         </div>
       </div>
 
-      {mode === "cards" ? <CardView posts={posts} /> : <CompactView posts={posts} />}
+      {mode === "cards" ? (
+        <CardView posts={posts} stats={stats} />
+      ) : (
+        <CompactView posts={posts} stats={stats} />
+      )}
     </>
   );
 }
@@ -79,7 +100,13 @@ export default function BlogList({ posts }: { posts: BlogListItem[] }) {
    Không viền, không nền, các bài ngăn nhau bằng một đường kẻ mảnh.
    ========================================================================== */
 
-function CardView({ posts }: { posts: BlogListItem[] }) {
+function CardView({
+  posts,
+  stats,
+}: {
+  posts: BlogListItem[];
+  stats: Record<string, PostStats>;
+}) {
   return (
     <div className="divide-y divide-[var(--line)]">
       {posts.map((post, i) => (
@@ -105,7 +132,7 @@ function CardView({ posts }: { posts: BlogListItem[] }) {
                 </p>
               )}
 
-              <Meta post={post} className="mt-4" />
+              <Meta post={post} stats={stats[post.slug]} className="mt-4" />
             </div>
 
             <div className="relative h-24 w-24 shrink-0 overflow-hidden sm:h-[8.5rem] sm:w-[13rem]">
@@ -122,7 +149,13 @@ function CardView({ posts }: { posts: BlogListItem[] }) {
    Chế độ 2 — danh sách gọn, giống huyenchip.com
    ========================================================================== */
 
-function CompactView({ posts }: { posts: BlogListItem[] }) {
+function CompactView({
+  posts,
+  stats,
+}: {
+  posts: BlogListItem[];
+  stats: Record<string, PostStats>;
+}) {
   return (
     <ul className="divide-y divide-[var(--line)]">
       {posts.map((post, i) => (
@@ -150,7 +183,7 @@ function CompactView({ posts }: { posts: BlogListItem[] }) {
                 </p>
               )}
 
-              <Meta post={post} className="mt-3" plain />
+              <Meta post={post} stats={stats[post.slug]} className="mt-3" plain />
             </div>
           </Link>
         </li>
@@ -193,19 +226,25 @@ function ModeButton({
 /** Hàng thông tin dưới mỗi bài: thời gian đọc · lượt xem · lượt bình luận */
 function Meta({
   post,
+  stats,
   className = "",
   plain = false,
 }: {
   post: BlogListItem;
+  stats?: PostStats;
   className?: string;
   plain?: boolean;
 }) {
+  // stats chưa về thì chỗ số để trống, chữ vẫn giữ nguyên vị trí nên trang không bị giật
+  const views = stats ? compact(stats.views) : "—";
+  const hasComments = (stats?.comments ?? 0) > 0;
+
   const items = [
     { icon: <LuClock />, text: `${post.minutes} min read` },
-    { icon: <LuEye />, text: compact(post.views) },
+    { icon: <LuEye />, text: views },
     // Không có bình luận nào thì ẩn luôn cho gọn
-    ...(post.comments > 0
-      ? [{ icon: <LuMessageCircle />, text: compact(post.comments) }]
+    ...(hasComments
+      ? [{ icon: <LuMessageCircle />, text: compact(stats!.comments) }]
       : []),
   ];
 
@@ -217,11 +256,11 @@ function Meta({
         <span aria-hidden>·</span>
         <span>{post.minutes} min read</span>
         <span aria-hidden>·</span>
-        <span>{compact(post.views)} views</span>
-        {post.comments > 0 && (
+        <span>{views} views</span>
+        {hasComments && (
           <>
             <span aria-hidden>·</span>
-            <span>{compact(post.comments)} comments</span>
+            <span>{compact(stats!.comments)} comments</span>
           </>
         )}
       </div>
