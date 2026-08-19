@@ -152,6 +152,24 @@ số view luôn hiện 0, không lỗi gì cả.
 
 ---
 
+## 5b. Hiện số lượt bình luận ở danh sách blog (không bắt buộc)
+
+Số bình luận được đếm từ GitHub Discussions, mà GitHub bắt buộc phải có token
+mới cho hỏi. Không làm bước này thì trang blog vẫn chạy, chỉ là chỗ số bình
+luận sẽ không hiện ra.
+
+1. Vào https://github.com/settings/tokens?type=beta > **Generate new token**.
+2. Đặt tên bất kỳ, mục **Repository access** chọn **Public Repositories (read-only)**.
+3. Bấm Generate, copy chuỗi token (chỉ hiện một lần duy nhất).
+4. Dán vào `.env.local` và vào Vercel **Settings > Environment Variables**:
+   ```
+   GITHUB_TOKEN=github_pat_xxxxxxxx
+   ```
+
+Số bình luận được hỏi lại tối đa 5 phút một lần nên không sợ chạm giới hạn của GitHub.
+
+---
+
 ## 6. Đưa website lên mạng (Vercel) — miễn phí
 
 ### Lần đầu tiên

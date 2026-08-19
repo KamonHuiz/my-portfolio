@@ -12,7 +12,7 @@ export default function NewsPage() {
   const years = parseNews(readContentFile("news.md"));
 
   return (
-    <div className="mx-auto max-w-4xl px-6 pt-10 pb-4">
+    <div className="page-shell pt-10 pb-4">
       <Reveal>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">News</h1>
         <p className="mt-3 max-w-xl text-[var(--muted)]">

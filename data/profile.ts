@@ -8,18 +8,18 @@ export const hero = {
   image: "/images/wud.jpg",
   alt: "Watt'up Debuggers club",
   caption:
-    "Shoutout to my lovely club Watt'up Debuggers that I and my highschool friends founded on 5 August 2023.",
+    "Shoutout to my club Watt'up Debuggers that I, my friends and especially my teacher Nguyet Minh founded on 5 August 2023.",
 };
 
 export const about = {
   /** Câu tiêu đề lớn ở đầu phần giới thiệu */
-  headline: "I'm Kamon Nguyen. I teach machines to see, and I write about what they show me.",
+  headline: "Hi, I'm Nguyen Gia Huy or you can call me Kamon.",
 
   /** Mỗi chuỗi là một đoạn văn. Thêm đoạn mới = thêm một dòng "..." */
   paragraphs: [
-    "Hi, I'm Gia Huy — most people online know me as Kamon. I'm a student and a builder, currently spending most of my waking hours on artificial intelligence, especially the parts of it that deal with images and video.",
-    "I founded Watt'up Debuggers with a group of high school friends in August 2023, because we wanted a place where people who like breaking things apart could do it together instead of alone. That club is still one of the things I'm proudest of.",
-    "These days I read papers, train models, lose arguments with CUDA, and write down whatever I learn so that future me doesn't have to learn it twice. This site is where that writing lives.",
+    "I'm a second-year student at Ho Chi Minh City University of Technology VNU-HCM. I'm a computer science student majoring in artificial intelligence so this site is all about my journey in this field. ",
+    "I founded Watt'up Debuggers with a group of high school friends in August 2023 to create a community where students passionate about technology could learn, collaborate, and grow together. Beyond exploring technology, the club also helps members build valuable skills and prepare for their future studies at university. To this day, Watt'up Debuggers remains one of the achievements I am most proud of.",
+    "I love talking and discussing ideas with others. Reach out to me on social media or email if you want to talk about trending AI topics, Computer Vision,  or anything else.",
   ],
 
   portrait: "/images/huy.jpg",
@@ -27,31 +27,3 @@ export const about = {
   /** File PDF nằm trong thư mục public/ */
   resume: "/Kamon-Nguyen-CV.pdf",
 };
-
-/** Section "What I love" — thêm/bớt/sửa thoải mái */
-export const whatILove = [
-  {
-    title: "Computer Vision",
-    body: "Detection, segmentation, tracking — anything that turns raw pixels into something a machine can reason about. This is my home turf.",
-  },
-  {
-    title: "Multimodal Learning",
-    body: "Models that read an image and talk about it, or read a sentence and draw it. The moment two modalities click together still feels like magic.",
-  },
-  {
-    title: "Deep Learning Systems",
-    body: "Training loops, mixed precision, data pipelines, squeezing a model onto hardware that really shouldn't be able to run it.",
-  },
-  {
-    title: "Generative Models",
-    body: "Diffusion, GANs, and the strange, beautiful failure modes they produce when you push them somewhere they weren't meant to go.",
-  },
-  {
-    title: "Edge AI & Robotics",
-    body: "Making models small and fast enough to live on a device that moves through the real world instead of a datacenter.",
-  },
-  {
-    title: "Teaching & Writing",
-    body: "Explaining a hard idea until it feels obvious. If I can't write it down clearly, I probably don't understand it yet.",
-  },
-];

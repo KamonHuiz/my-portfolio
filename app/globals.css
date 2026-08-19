@@ -6,6 +6,43 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ==========================================================================
+   CHIỀU RỘNG NỘI DUNG
+   Đây là công tắc duy nhất cho độ rộng của cả website.
+   Sửa --content-width là mọi trang, thanh nav và footer đổi theo.
+
+     56rem  = 896px   hẹp, dễ đọc
+     72rem  = 1152px  vừa
+     80rem  = 1280px  rộng như victoreke.com  ← đang dùng
+     100%             tràn hết màn hình
+
+   --content-pad là khoảng cách chừa hai bên mép.
+   ========================================================================== */
+
+:root {
+  --content-width: 65rem;
+  --content-pad: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --content-pad: 4rem;
+  }
+}
+
+.page-shell {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--content-pad);
+}
+
+/* Riêng phần chữ của bài blog thì giữ hẹp cho dễ đọc,
+   dòng quá dài mắt sẽ mỏi. Đổi số này nếu muốn bài viết rộng hơn. */
+.reading-width {
+  max-width: 48rem;
+}
+
+/* ==========================================================================
    BẢNG MÀU & FONT
    Muốn đổi màu toàn site thì sửa ở đây, không cần đụng vào chỗ nào khác.
    Tông màu lấy theo huyenchip.com (nền kem, chữ gần đen, link xanh).
@@ -254,7 +291,7 @@ html.dark .shiki, html.dark .shiki span {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.rise { animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.rise { animation: rise 0.30s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

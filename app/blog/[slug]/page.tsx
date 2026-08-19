@@ -51,7 +51,7 @@ export default async function PostPage({ params }: Props) {
   const { newer, older } = getAdjacentPosts(slug);
 
   return (
-    <div className="mx-auto max-w-4xl px-6 pt-10 pb-4">
+    <div className="page-shell pt-10 pb-4">
       <Link
         href="/blog"
         className="inline-flex items-center gap-1 text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)]"
@@ -61,7 +61,7 @@ export default async function PostPage({ params }: Props) {
       </Link>
 
       <article className="rise mt-8">
-        <header className="border-b border-[var(--line)] pb-8">
+        <header className="reading-width border-b border-[var(--line)] pb-8">
           <h1 className="text-3xl leading-tight font-semibold tracking-tight sm:text-[2.6rem] sm:leading-[1.15]">
             {post.title}
           </h1>
@@ -107,12 +107,12 @@ export default async function PostPage({ params }: Props) {
             width={1600}
             height={900}
             priority
-            sizes="(max-width: 896px) 100vw, 896px"
-            className="mt-8 h-auto w-full rounded-xl border border-[var(--line)] object-cover"
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="reading-width mt-8 h-auto w-full rounded-xl border border-[var(--line)] object-cover"
           />
         )}
 
-        <div className="mt-10 lg:grid lg:grid-cols-[1fr_200px] lg:gap-10">
+        <div className="mt-10 lg:grid lg:grid-cols-[minmax(0,48rem)_1fr] lg:gap-12">
           <div
             className="markdown min-w-0"
             dangerouslySetInnerHTML={{ __html: html }}
@@ -144,7 +144,7 @@ export default async function PostPage({ params }: Props) {
 
       {/* Bài trước / bài sau */}
       {(newer || older) && (
-        <nav className="mt-16 grid gap-4 border-t border-[var(--line)] pt-8 sm:grid-cols-2">
+        <nav className="reading-width mt-16 grid gap-4 border-t border-[var(--line)] pt-8 sm:grid-cols-2">
           {newer ? (
             <Link
               href={`/blog/${newer.slug}`}

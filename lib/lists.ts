@@ -1,4 +1,4 @@
-import { inlineMarkdown } from "./markdown";
+import { inlineMarkdown } from "./inline";
 
 /* ==========================================================================
    NEWS — đọc content/news.md

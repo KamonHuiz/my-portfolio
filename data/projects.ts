@@ -13,7 +13,7 @@ export type Project = {
   href: string;
   /** Vài từ khoá hiện dưới mô tả */
   tags: string[];
-  /** Năm thực hiện, hiện ở góc card */
+  /** Năm thực hiện. Không hiện ra ngoài, chỉ dùng để xếp thứ tự (mới nhất trước). */
   year: string;
   /** true = ghim lên đầu danh sách */
   featured?: boolean;
@@ -21,31 +21,15 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Watt'up Debuggers",
+    title: "Multi-Agent for Digital Verification",
     description:
-      "The club I co-founded in 2023 — a place for high school students to learn programming and electronics by taking things apart together.",
-    image: "/images/wud.jpg",
-    href: "https://github.com/KamonHuiz",
-    tags: ["Community", "Education"],
-    year: "2023",
+      "This project is a work for a company named NanoChip. The goal is to use multi-agent to help planning and verifying the microchip design. The project is still in progress.",
+    image: "/images/nanochip.jpg",
+    href: "https://github.com/KamonHuiz/VLSI-MultiAgent-Verification",
+    tags: ["LangChain", "LangGraph", "LangSmith", "Multi-Agent", "RAG"],
+    year: "2026",
     featured: true,
   },
-  {
-    title: "Project Two",
-    description:
-      "Thay đoạn này bằng mô tả ngắn về project của bạn. Một tới hai câu là đủ.",
-    image: "",
-    href: "https://github.com/KamonHuiz",
-    tags: ["PyTorch", "Computer Vision"],
-    year: "2025",
-  },
-  {
-    title: "Project Three",
-    description:
-      "Thay đoạn này bằng mô tả ngắn về project của bạn. Một tới hai câu là đủ.",
-    image: "",
-    href: "https://github.com/KamonHuiz",
-    tags: ["Python"],
-    year: "2024",
-  },
+
+
 ];

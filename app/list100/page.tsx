@@ -15,7 +15,7 @@ export default function List100Page() {
   const percent = total > 0 ? Math.round((done / total) * 100) : 0;
 
   return (
-    <div className="mx-auto max-w-4xl px-6 pt-10 pb-4">
+    <div className="page-shell pt-10 pb-4">
       <Reveal>
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">List 100</h1>
         <p className="mt-3 max-w-xl text-[var(--muted)]">
