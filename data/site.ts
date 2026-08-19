@@ -43,8 +43,14 @@ export const site = {
   url: resolveSiteUrl(),
   description:
     "Personal site of Kamon Nguyen — AI, computer vision, and things I build along the way.",
-  /** Repo GitHub chứa chính website này (Giscus dùng để lưu comment). */
-  repo: "KamonHuiz/my-portfolio",
+  /**
+   * Repo GitHub dùng để lưu bình luận (Giscus).
+   *
+   * Đây KHÔNG phải repo chứa code website. Giscus bắt buộc repo phải
+   * public thì người lạ mới đọc và viết bình luận được, nên ta tách
+   * riêng một repo rỗng cho việc này để repo code được để private.
+   */
+  repo: "KamonHuiz/giscus-placeholder",
 } as const;
 
 export const navLinks = [

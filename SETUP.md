@@ -106,12 +106,17 @@ Các tiêu đề `##` và `###` tự động chui vào mục lục bên phải b
 
 Bình luận được lưu trong phần Discussions của repo GitHub, hoàn toàn miễn phí và không quảng cáo.
 
-1. Vào repo `https://github.com/KamonHuiz/my-portfolio` > tab **Settings** >
-   kéo xuống mục **Features** > tick vào ô **Discussions**.
+> **Lưu ý quan trọng:** bình luận KHÔNG lưu trong repo code website, mà lưu
+> trong một repo rỗng riêng tên `giscus-placeholder`. Lý do: Giscus bắt buộc
+> repo phải **public** thì người lạ mới đọc và viết bình luận được. Tách ra
+> như vậy thì repo chứa code website được để **private** thoải mái.
+
+1. Tạo một repo **public** rỗng tên `giscus-placeholder` (không cần code gì bên trong),
+   vào **Settings** > kéo xuống mục **Features** > tick vào ô **Discussions**.
 2. Cài app giscus cho repo: mở https://github.com/apps/giscus > **Install** >
-   chọn repo `my-portfolio`.
+   chọn repo `giscus-placeholder`.
 3. Mở https://giscus.app, kéo xuống phần cấu hình:
-   - Ô **Repository**: gõ `KamonHuiz/my-portfolio`
+   - Ô **Repository**: gõ `KamonHuiz/giscus-placeholder`
    - **Page ↔ Discussions Mapping**: chọn **Discussion title contains page pathname**
    - **Discussion Category**: chọn **Announcements**
 4. Kéo xuống dưới cùng, phần code mẫu có 2 dòng:
